@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ㅇㅇ님의 공부차트</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename = 'chart_daily.css') }}">
+    <style>
+        .grid line {
+            stroke: lightgrey;
+            stroke-opacity: 0.7;
+        }
+        .lineChart {
+            fill: none;
+            stroke: steelblue;
+            stroke-width: 1.5px;
+        }
+        .lineChart:hover {
+            stroke: black;
+            stroke-width: 3px;
+        }
+        .toolTip {
+            position: absolute;
+            border: 1px solid;
+            border-radius: 4px 4px 4px 4px;
+            background: rgba(0, 0, 0, 0.8);
+            color : white;
+            padding: 5px;
+            text-align: center;
+            font-size: 12px;
+            min-width: 30px;
+        }
+
+    </style>
+
+    <style>
+        .menu-trigger {
+            top:10px;
+          left: 40%;
+          margin-right: auto;
+          margin-bottom: auto;
+        }
+        .menu-trigger,
+        .menu-trigger span {
+          display: inline-block;
+          transition: all .4s;
+          box-sizing: border-box;
+        }
+
+        .menu-trigger {
+          position: relative;
+          width: 50px;
+          height: 44px;
+          left:160px;
+        }
+
+        .menu-trigger span {
+          position: absolute;
+          left: 0;
+          width: 100%;
+          height: 4px;
+          background-color: #fff;
+          border-radius: 4px;
+        }
+
+        /* 중앙 라인이 고정된 자리에서 투명하게 사라지며 상하라인 회전하며 엑스자 */
+        .menu-trigger span:nth-of-type(1) {
+        -webkit-transform: translateY (20px) rotate (-45deg);
+          transform: translateY(20px) rotate(-45deg);
+          background-color: #fff;
+        }
+
+        .menu-trigger span:nth-of-type(2) {
+          top: 20px;
+          opacity: 0;
+          background-color: #fff;
+        }
+
+        .menu-trigger span:nth-of-type(3) {
+          bottom: 0;
+          -webkit-transform: translateY(-20px) rotate(45deg);
+          transform: translateY(-20px) rotate(45deg);
+          background-color: #fff;
+        }
+        
+        /* 엑스자에서 상하라인 회전하며 햄버거 버튼 만들기 */
+        
+        .menu-trigger.active-1 span:nth-of-type(1) {
+        -webkit-transform: translateY(3px) rotate(0deg);
+        transform: translateY(3px) translateX(-130px) rotate(0deg);
+        transition: transform 0.5s ease-in-out;
+        background-color: #000;
+        }
+
+        .menu-trigger.active-1 span:nth-of-type(2) {
+        opacity: 1;
+        transition: opacity 0.5s ease-in-out;
+        background-color: #000;
+        transform:translateX(-130px) rotate(0deg);
+        }
+
+        .menu-trigger.active-1 span:nth-of-type(3) {
+        -webkit-transform: translateY(1px) rotate(0deg);
+        transform: translateY(1px) translateX(-130px) rotate(0deg);
+        transition: transform 0.5s ease-in-out;
+        background-color: #000;
+        }
+
+       
+        nav{
+            left: -50px;
+            position: relative;
+            z-index: -1;
+        }
+
+    </style>
+</head>
+<body>
+    <a class="menu-trigger" href="#">
+        <span></span>
+        <span></span>
+        <span></span>
+    </a>
+    <nav>
+        
+        <div class="logo">
+            <img src="static/images/the1k_white.png" alt="LOGO">
+        </div>
+        <div class="menus">
+            <div class="menu_btn">
+                <button class="menu">
+                    <img src="static/images/home.png" alt="LOGO">
+                </button>
+            </div>
+            <div class="menu_btn">
+                <button class="menu active">
+                    <img src="static/images/chart.png" alt="LOGO">
+                </button>
+            </div>
+            <div class="menu_btn">
+                <button class="menu">
+                    <img src="static/images/person-white.png" alt="LOGO">
+                </button>
+            </div>
+        </div>
+        
+    </nav>
+    <main>
+        <div class="main_header">
+            <h1>{{ user.name }}님의 일간 공부 시간 차트</h1>
+            <a href="{{ url_for('study_cam') }}">공부 녹화</a>
+            <a href="{{ url_for('logout') }}">로그아웃</a>
+            <select name="chart" id="chart_select">
+                <option value="daily">일간 차트 보기</option>
+                <option value="monthly">월간 차트 보기</option>
+                <option value="total">평균 차트 보기</option>
+            </select>
+        </div>
+        <div class="main_chart">
+            <svg class="charts">
+                
+            </svg>
+        </div>
+        <div class="dash_board">
+            <h2>스터디 대시보드</h2>
+            <div class="board_parts">
+                <div class="board_part_1"></div>
+                <div class="board_part_2"></div>
+            </div>
+        </div>
+    </main>
+    <aside>
+        <div class="week_cal">
+            <div class="week_name">
+                <h3>JAN 2024</h3>
+                <div class="pn_buttons">
+                    <button class="previous">
+                        <img src="static/images/previous.png" alt="">
+                    </button>
+                    <button class="next">
+                        <img src="static/images/next.png" alt="">
+                    </button>
+                </div>
+            </div>
+            <div class="week_days">
+                <div class="days">5<br>MOM</div>
+                <div class="days">6<br>TUE</div>
+                <div class="days days_active">7<br>WED</div>
+                <div class="days">8<br>THU</div>
+                <div class="days">9<br>FRI</div>
+                <div class="days">10<br>SAT</div>
+                <div class="days">11<br>SUN</div>
+            </div>
+        </div>
+        <div class="study_board">
+            <div class="real_study">
+                <div class="real_study_title">
+                    <h3>순수 공부 시간</h3>
+                    <a href="#" class="go_study">READ MORE →</a>
+                </div>
+                <div class="today_container">
+                    <div class="today_study today">
+                        <div class="today_date">
+                            07
+                        </div>
+                        <div class="time_container">
+
+                        </div>
+                    </div>
+
+                    <div class="today_study">
+                        <div class="today_date">
+                            06
+                        </div>
+                        <div class="time_container">
+                            
+                        </div>
+                    </div>
+
+                    <div class="today_study">
+                        <div class="today_date">
+                            05
+                        </div>
+                        <div class="time_container">
+                            
+                        </div>
+                    </div>
+                </div>
+                
+            </div>
+            <div class="avg_chart">
+                <div class="avg_chart_title">
+                    <h3>통계</h3>
+                </div>
+                <div class="chart_container">
+                    <div class="avg_chart_main">
+                        <img src="avg_chart.png" alt="">
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+    </aside>
+</body>
+<script src="https://d3js.org/d3.v4.min.js"></script>
+<script>
+ 
+    var series = ["실 공부시간", "잠든 시간"];
+ 
+    var dataset = [ 
+        {'1': 47, '2':55, '3':60, '4':45, '5':11, '6':52,  '7':60, '8':44, '9':47, '10':50, '11':7, '12':0},
+        {'1': 13, '2':5,  '3':0,  '4':15, '5':49, '6':8,   '7':0,  '8':16, '9':13, '10':10, '11':53, '12':60}];
+ 
+    var keys = d3.keys(dataset[0]);
+    var data = [];
+ 
+    dataset.forEach(function(d, i) {
+    data[i] = keys.map(function(key) { return {x: key, y: d[key]}; })
+    });
+ 
+    var margin = {left: 20, top: 10, right: 10, bottom: 20};
+    var svg = d3.select("svg");
+    var width  = parseInt(svg.style("width"), 10) - margin.left - margin.right;
+    var height = parseInt(svg.style("height"), 10)- margin.top  - margin.bottom;
+    var svgG = svg.append("g")
+        .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+    var xScale = d3.scalePoint()//scaleBand() scaleOrdinal
+        .domain([0,1,2,3,4,5,6,7,8,9,10,11,12,13])
+        .rangeRound([0, width]);
+    var yScale = d3.scaleLinear()
+        .domain([-5, 5 + d3.max(dataset, function(d) { return d3.max(keys, function(key) { return d[key];});})])
+        .nice()
+        .range([height, 0]);
+    var colors = d3.scaleOrdinal(d3.schemeCategory10);
+ 
+    svgG.append("g")
+        .attr("class", "grid")
+        .attr("transform", "translate(0," + height + ")")
+        .call(d3.axisBottom(xScale)
+            .tickSize(-height)
+        );
+ 
+    svgG.append("g")
+        .attr("class", "grid")
+        .call(d3.axisLeft(yScale)
+            .ticks(5)
+            .tickSize(-width)
+           );
+ 
+    var line = d3.line()
+        //.curve(d3.curveBasis)
+        .x(function(d) { return xScale(d.x); })
+        .y(function(d) { return yScale(d.y); });
+    var lineG = svgG.append("g")
+        .selectAll("g")
+        .data(data)
+           .enter().append("g");
+ 
+    lineG.append("path")
+        .attr("class", "lineChart")
+        .style("stroke", function(d, i) { return colors( series[i]); })
+        .attr("d", function(d, i) {return line(d); });
+ 
+    lineG.selectAll("dot")
+        .data(function(d) {return d })
+        .enter().append("circle")
+            .style("z-index", 1)
+            .style("position", "relative")
+            .attr("r", 3)
+            .attr("cx", function(d) { return xScale(d.x) })
+            .attr("cy", function(d) { return yScale(d.y);})
+            .on("mouseover", function() { tooltip.style("display", null); })
+            .on("mouseout",  function() { tooltip.style("display", "none"); })
+            .on("mousemove", function(d) {
+                tooltip.style("left", (d3.event.pageX+10)+"px");
+                tooltip.style("top",  (d3.event.pageY-10)+"px");
+                tooltip.html(d.x + " 시 <br/>" + "공부시간 : " + d.y);
+            });
+
+    var tooltip = d3.select("body")
+        .append("div")
+        .attr("class", "toolTip")
+        .style("display", "none");
+ 
+    var legend = svgG.append("g")
+        .attr("text-anchor", "end")
+        .style("z-index", 9999)
+        .style("position", "relative")
+        .selectAll("g")
+        .data(series)
+        .enter().append("g")
+        .attr("transform", function(d, i) { return "translate(0," + i * 20 + ")"; });
+ 
+    legend.append("rect")
+          .attr("x", width - 20)
+          .attr("y", ".5em")
+          .attr("width", 19)
+          .attr("height", 19)
+          .attr("fill", colors);
+ 
+      legend.append("text")
+          .attr("x", width - 30)
+          .attr("y", 15)
+          .attr("dy", "0.5em")
+          .text(function(d) { return d; });
+
+</script>
+
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+  <script>
+        // 햄버거 버튼 요소 선택
+        const burger = $('.menu-trigger');
+
+        // 각 햄버거 버튼에 클릭 이벤트 연결
+        burger.each(function(index) {
+          const $button = $(this);
+
+          $button.on('click', function(e) {
+            e.preventDefault();
+
+            // 버튼 활성화/비활성화 토글
+            $button.toggleClass('active-' + (index + 1));
+
+            // 메뉴 표시/숨기기
+            if ($('nav').is(':hidden')) {
+              $('nav').show();
+            } else {
+              $('nav').hide();
+            }
+          });
+        });
+      </script>
+
+
+</html>

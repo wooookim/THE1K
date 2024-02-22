@@ -1,0 +1,406 @@
+* {
+    padding: 0;
+    margin: 0;
+}
+
+html {
+    width: 100%;
+    height: 100%;
+}
+
+body {
+    display: flex;
+    width: 100%;
+    height: 100%;
+}
+
+
+/* nav 파트 */
+
+nav {
+    width: 15%;
+    height: 100%;
+    background-color: #555555;
+}
+
+nav .logo {
+    width: 100%;
+    height: 32%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.logo img {
+    width: 70%;
+    align-self: center;
+}
+
+.menus {
+    width: 100%;
+    height: 40%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+}
+
+.menu {
+    width: 99%;
+    background-color: #555555;
+    border: 0;
+    opacity: 0.8;
+    height: 70px;
+    cursor: pointer;
+}
+
+.menus:hover {
+    opacity: 1;
+    border-right: #fff 5px solid;
+    background-color: #777777;
+}
+
+.active {
+    opacity: 1;
+    border-right: 5px solid #fff;
+    width: 99%;
+}
+
+.menu img {
+    width: 50px;
+}
+
+
+
+/* main 파트 */
+
+main {
+    width: 80%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 3%;
+}
+
+.main_header {
+    display: flex;
+    justify-content: space-around;
+    height: 10%;
+    align-items: center;
+    width: 100%;
+}
+
+#chart_select {
+    width: 40%;
+    height: 40%;
+
+}
+
+
+/* chart 파트 */
+.main_chart {
+    width: 100%;
+    height: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.charts {
+    width: 80%;
+    height: 100%;
+    /* background-color: #f3f3f3; */
+    /* background-image: url("https://upload.wikimedia.org/wikipedia/commons/thumb/b/bd/Pushkin_population_history.svg/1200px-Pushkin_population_history.svg.png"); */
+    /* background-size: 75%; */
+    /* background-repeat: no-repeat;
+    background-position: center; */
+}
+
+/* dash_board 파트 */
+.dash_board {
+    background-color: #f3f3f3;
+    width: 80%;
+    height: 30%;
+    border-radius: 1rem;
+}
+
+.dash_board h2 {
+    padding: 3%;
+    font-size: 1rem;
+    height: 10%;
+}
+
+
+
+.board_parts {
+    width: 100%;
+    height: 70%;
+    display: flex;
+    flex-direction: row;
+}
+
+.board_part_1 {
+    width: 50%;
+    height: 90%;
+    border-right: #fff 5px solid;
+}
+
+.board_part_2 {
+    width: 50%;
+    height: 90%;
+}
+
+
+/* aside 파트 */
+
+aside {
+    width: 23%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+}
+
+
+.week_cal {
+    width: 100%;
+    height: 20%;
+    background-color: #f3f3f3;
+    border-radius: .5rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+}
+
+
+.week_name {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+}
+
+.pn_buttons {
+    display: flex;
+    flex-direction: row;
+    gap: .3rem;
+}
+
+.pn_buttons button {
+    display: flex;
+    flex-direction: row;
+    border: #f3f3f3 1px solid;
+    font-size: 1.1rem;
+    height: 1.2rem;
+    width: 1.2rem;
+    justify-content: center;
+    align-items: center;
+}
+
+.pn_buttons button img {
+    height: .7rem;
+    width: .7rem;
+}
+
+.pn_buttons button:hover {
+    background-color: #bbb;
+    border: #bbb 1px solid;
+    border-radius: .2rem;
+    cursor: pointer;
+}
+
+
+.week_days {
+    width: 100%;
+    height: 50%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+.days {
+    width: 14%;
+    height: 80%;
+    font-size: .7rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    border-right: #555555 1px solid;
+    color: #777777;
+}
+
+.days_active {
+    width: 14%;
+    height: 80%;
+    font-size: .8rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    border-right: #555555 1px solid;
+    color: #000;
+    background-color: #ddd;
+}
+
+.days:hover {
+    font-size: .8rem;
+    color: #000;
+    background-color: #ddd;
+    cursor: pointer;
+}
+
+.days:last-child {
+    border: none;
+}
+
+
+
+/* study_board 파트 */
+
+.study_board {
+    width: 100%;
+    height: 70%;
+    background-color: #f3f3f3;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    border-radius: .5rem;
+}
+
+.real_study {
+    width: 100%;
+    height: 47%;
+    background-color: #f3f3f3;
+    border-radius: .5rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+}
+
+.avg_chart {
+    width: 100%;
+    height: 47%;
+    background-color: #f3f3f3;
+    border-radius: .5rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+}
+
+/* real_study 파트 */
+
+.real_study_title {
+    width: 100%;
+    height: 10%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: end;
+}
+
+.real_study_title h3 {
+    font-size: 1rem;
+}
+
+.real_study_title a {
+    font-size: .6rem;
+    color: #aaa;
+    text-decoration: none;
+    font-weight: 900;
+}
+
+.real_study_title a:hover {
+    color: #333;
+    cursor: pointer;
+}
+
+
+/* today_study 파트 */
+
+.today_container {
+    width: 100%;
+    height: 90%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.today_study {
+    width: 90%;
+    height: 30%;
+    border: #555555 1px solid;
+    border-radius: .3rem;
+
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+.today_date {
+    width: 40%;
+    text-align: center;
+    font-size: 1.5rem;
+    font-weight: bolder;
+}
+
+.time_container {
+    width: 60%;
+    height: 70%;
+    border-left: #000 1px solid;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: .5rem;
+}
+
+.today_container .today {
+    color: white;
+    background-color: #393A3F;
+}
+
+.today .time_container {
+    border-left: white 1px solid;
+}
+
+
+
+/* avg_chart 파트 */
+
+.avg_chart_title {
+    width: 100%;
+    height: 10%;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+}
+
+.avg_chart_title h3 {
+    font-size: 1rem;
+    padding-left: 1rem;
+}
+
+.chart_container {
+    width: 100%;
+    height: 90%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.avg_chart_main {
+    width: 90%;
+    height: 100%;
+}
+
+.chart_container img {
+    width: 100%;
+    height: 100%;
+}
